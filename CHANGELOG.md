@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Instead of patching a static value, the mod now takes the value from the configuration file
-
+- Changed how Show() was being patched
 
 ## [0.0.1] - 2023-11-18
 

@@ -40,8 +40,9 @@ namespace MoreSkillPoints
         {
 
             CodeMatcher codeMatcher = new CodeMatcher(instructions, generator);
-            return codeMatcher.MatchForward(false, new CodeMatch[1] {new CodeMatch(new OpCode?(OpCodes.Ldc_I4_6), (object)null, (string)null) }).RemoveInstructions(1).Insert(new CodeInstruction[1] { new CodeInstruction(OpCodes.Ldc_I4, (object)MoreSkillPoints.configSkillPointsPerLevel.Value) }).InstructionEnumeration();
-            
+            return codeMatcher.MatchForward(false, new CodeMatch(new OpCode? (OpCodes.Ldc_I4_6))).RemoveInstruction()
+                .Insert(new CodeInstruction(OpCodes.Ldc_I4, MoreSkillPoints.configSkillPointsPerLevel.Value))
+                .InstructionEnumeration();
         }
     }
     
