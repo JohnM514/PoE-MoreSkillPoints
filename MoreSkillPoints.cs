@@ -13,7 +13,7 @@ namespace MoreSkillPoints
 
         private const string PLUGIN_GUID = "juan514.poe.moreskillpoints";
         private const string PLUGIN_NAME = "More Skill Points";
-        private const string PLUGIN_VERSION = "0.0.1";
+        private const string PLUGIN_VERSION = "0.0.2";
 
         private readonly Harmony harmony = new Harmony(PLUGIN_GUID);
 
@@ -44,4 +44,21 @@ namespace MoreSkillPoints
             
         }
     }
+    
+    [HarmonyPatch(typeof(UICharacterCreationManager), "HandleLevelLooping")] 
+    class HandleLevelLoopingPatch
+    {
+        internal static ILGenerator generator;
+        
+        [HarmonyTranspiler]
+        static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+        {
+
+            CodeMatcher codeMatcher = new CodeMatcher(instructions, generator);
+            return codeMatcher.MatchForward(false, new CodeMatch(new OpCode?(OpCodes.Ldc_I4_6))).RemoveInstruction()
+                .Insert(new CodeInstruction(OpCodes.Ldc_I4, MoreSkillPoints.configSkillPointsPerLevel.Value))
+                .InstructionEnumeration();
+        }
+    }
+    
 }
